@@ -11,8 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle route based on query parameters
     catalog.handleRoute();
     
-    // Add search event listener
-    catalog.searchInput.addEventListener('input', () => catalog.updateSearch());
+    // Add search event listener (only when search container is visible)
+    if (catalog.searchContainer.style.display !== 'none') {
+        catalog.searchInput.addEventListener('input', () => catalog.updateSearch());
+    }
 });
 
 class Catalog {
@@ -23,6 +25,7 @@ class Catalog {
         this.bookList = document.getElementById('bookList');
         this.bookDetail = document.getElementById('bookDetail');
         this.searchInput = document.getElementById('searchInput');
+        this.searchContainer = document.getElementById('searchContainer');
     }
 
     loadBooks() {
@@ -111,6 +114,9 @@ class Catalog {
     renderBookDetail(book) {
         this.bookList.style.display = 'none';
         this.bookDetail.style.display = 'block';
+        
+        // Hide search bar when viewing book detail
+        this.searchContainer.style.display = 'none';
         
         const fields = [
             { label: 'ID', value: book.ID },
