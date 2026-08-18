@@ -29,12 +29,24 @@ class Catalog {
         this.searchInput = document.getElementById('searchInput');
         this.searchContainer = document.getElementById('searchContainer');
         this.paginationContainer = document.getElementById('pagination');
+        
+        // Popup elements
+        this.popupOverlay = document.getElementById('imagePopup');
+        this.popupImage = document.getElementById('popupImage');
+        this.closePopup = document.querySelector('.close-popup');
+        
+        // Initialize popup close event
+        this.closePopup.addEventListener('click', () => this.closeImagePopup());
+        this.popupOverlay.addEventListener('click', (e) => {
+            if (e.target === this.popupOverlay) {
+                this.closeImagePopup();
+            }
+        });
     }
 
     loadBooks() {
         // Read books from TIC-Library-catalog.csv using Papa Parse to load as JSON
-        fetch('./TIC-Library-catalog.csv') // mock-library-catalog.csv
-        // fetch('mock-library-catalog.csv')
+        fetch('./TIC-Library-catalog.csv')
             .then(response => response.text())
             .then(csvText => {
                 const results = Papa.parse(csvText, { header: true });
@@ -334,6 +346,11 @@ class Catalog {
         prevArrow.disabled = imageUrls.length <= 1;
         nextArrow.disabled = imageUrls.length <= 1;
         
+        // Add click event to image to open popup
+        bookImage.addEventListener('click', () => {
+            this.openImagePopup(imageUrls[currentImageIndex]);
+        });
+        
         // Add event listeners to navigation arrows
         prevArrow.onclick = () => {
             if (currentImageIndex > 0) {
@@ -350,6 +367,16 @@ class Catalog {
                 imageCounter.textContent = `Image ${currentImageIndex + 1} of ${imageUrls.length}`;
             }
         };
+    }
+
+    openImagePopup(imageSrc) {
+        this.popupImage.src = imageSrc;
+        this.popupOverlay.style.display = 'flex';
+    }
+
+    closeImagePopup() {
+        this.popupOverlay.style.display = 'none';
+        this.popupImage.src = '';
     }
 
     updateSearch() {
