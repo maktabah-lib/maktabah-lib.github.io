@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIC Library Catalog</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1>TIC Library Catalog</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for books..." autocomplete="off">
+            <div id="searchSuggestions" class="search-suggestions"></div>
+        </div>
+    </header>
+
+    <main class="catalog-main">
+        <div class="filters">
+            <h2>Filter & Sort</h2>
+            <select id="sortSelect">
+                <option value="title-asc">Sort by Title (A-Z)</option>
+                <option value="title-desc">Sort by Title (Z-A)</option>
+                <option value="author-asc">Sort by Author (A-Z)</option>
+                <option value="author-desc">Sort by Author (Z-A)</option>
+            </select>
+        </div>
+
+        <div class="book-list" id="bookList"></div>
+
+        <nav class="pagination" id="pagination"></nav>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 TIC Library Catalog</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
