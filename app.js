@@ -184,11 +184,40 @@ class Catalog {
             
             const bookCard = document.createElement('div');
             bookCard.className = 'book-card';
-            bookCard.innerHTML = `
+            
+            // Create image container
+            const imageDiv = document.createElement('div');
+            imageDiv.className = 'book-card-image';
+            
+            // Try to load the first image for this book
+            const imageUrl = `./catalog-imgs/${book.ID}/1.jpg`;
+            const img = new Image();
+            img.onload = function() {
+                // Image loaded successfully
+                imageDiv.appendChild(this);
+            };
+            img.onerror = function() {
+                // Image failed to load, show placeholder
+                const placeholder = document.createElement('div');
+                placeholder.className = 'book-card-image-placeholder';
+                placeholder.innerHTML = '📖';
+                imageDiv.appendChild(placeholder);
+            };
+            img.src = imageUrl;
+            img.alt = `Cover of ${title}`;
+            
+            bookCard.appendChild(imageDiv);
+            
+            // Create details container
+            const detailsDiv = document.createElement('div');
+            detailsDiv.className = 'book-card-details';
+            detailsDiv.innerHTML = `
                 <h5>${title}</h5>
                 <p class="author">${author}</p>
                 <p class="isbn">ISBN: ${isbn}</p>
             `;
+            bookCard.appendChild(detailsDiv);
+            
             // Add click event to navigate to book detail
             bookCard.addEventListener('click', () => {
                 window.location.href = `./index.html?id=${book.ID}`;
@@ -357,6 +386,8 @@ class Catalog {
             imageCounter.textContent = 'No images available';
             prevArrow.disabled = true;
             nextArrow.disabled = true;
+            // Remove zoom cursor when no images
+            imageContainer.classList.remove('has-image');
             return;
         }
         
@@ -375,6 +406,9 @@ class Catalog {
         // Enable/disable navigation arrows based on image count
         prevArrow.disabled = imageUrls.length <= 1;
         nextArrow.disabled = imageUrls.length <= 1;
+        
+        // Add zoom cursor when images are available
+        imageContainer.classList.add('has-image');
         
         // Add click event to image to open popup
         bookImage.addEventListener('click', () => {
