@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Handle route based on query parameters
     catalog.handleRoute();
+    
+    // Add search event listener
+    catalog.searchInput.addEventListener('input', () => catalog.updateSearch());
 });
 
 class Catalog {
@@ -19,6 +22,7 @@ class Catalog {
         // DOM Elements
         this.bookList = document.getElementById('bookList');
         this.bookDetail = document.getElementById('bookDetail');
+        this.searchInput = document.getElementById('searchInput');
     }
 
     loadBooks() {
@@ -70,7 +74,21 @@ class Catalog {
             return;
         }
 
-        this.books.forEach(book => {
+        // Get search query from input
+        const searchTerm = this.searchInput.value.toLowerCase().trim();
+        
+        // Filter books based on search term
+        const filteredBooks = this.books.filter(book => {
+            const title = (book.Title || '').toLowerCase();
+            const author = (book.Author || '').toLowerCase();
+            const isbn = (book.ID || '').toLowerCase();
+            
+            return title.includes(searchTerm) || 
+                   author.includes(searchTerm) || 
+                   isbn.includes(searchTerm);
+        });
+
+        filteredBooks.forEach(book => {
             const title = book.Title || '(none)';
             const author = book.Author || '(none)';
             const isbn = book.ID || '(none)';
@@ -124,7 +142,8 @@ class Catalog {
     }
 
     updateSearch() {
-        // Search functionality removed as requested
+        // Search functionality - filter books based on input
+        this.renderBooks();
     }
 
     updateSort() {
