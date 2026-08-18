@@ -33,13 +33,40 @@ class Catalog {
         // Popup elements
         this.popupOverlay = document.getElementById('imagePopup');
         this.popupImage = document.getElementById('popupImage');
+        this.popupPrevArrow = document.getElementById('popupPrevArrow');
+        this.popupNextArrow = document.getElementById('popupNextArrow');
+        this.popupImageCounter = document.getElementById('popupImageCounter');
         this.closePopup = document.querySelector('.close-popup');
         
-        // Initialize popup close event
+        // Initialize popup events
+        this.initializePopupEvents();
+    }
+
+    initializePopupEvents() {
+        // Close popup when clicking the X
         this.closePopup.addEventListener('click', () => this.closeImagePopup());
+        
+        // Close popup when clicking outside the image
         this.popupOverlay.addEventListener('click', (e) => {
             if (e.target === this.popupOverlay) {
                 this.closeImagePopup();
+            }
+        });
+        
+        // Navigation arrows for popup
+        this.popupPrevArrow.addEventListener('click', () => this.navigatePopup(-1));
+        this.popupNextArrow.addEventListener('click', () => this.navigatePopup(1));
+        
+        // Keyboard navigation for popup
+        document.addEventListener('keydown', (e) => {
+            if (this.popupOverlay.style.display === 'flex') {
+                if (e.key === 'Escape') {
+                    this.closeImagePopup();
+                } else if (e.key === 'ArrowLeft') {
+                    this.navigatePopup(-1);
+                } else if (e.key === 'ArrowRight') {
+                    this.navigatePopup(1);
+                }
             }
         });
     }
@@ -337,6 +364,9 @@ class Catalog {
         placeholder.style.display = 'none';
         bookImage.style.display = 'block';
         
+        // Store image URLs for popup navigation
+        this.currentBookImages = imageUrls;
+        
         // Display first image
         bookImage.src = imageUrls[0];
         currentImageIndex = 0;
@@ -348,7 +378,7 @@ class Catalog {
         
         // Add click event to image to open popup
         bookImage.addEventListener('click', () => {
-            this.openImagePopup(imageUrls[currentImageIndex]);
+            this.openImagePopup(imageUrls[currentImageIndex], currentImageIndex);
         });
         
         // Add event listeners to navigation arrows
@@ -369,9 +399,41 @@ class Catalog {
         };
     }
 
-    openImagePopup(imageSrc) {
-        this.popupImage.src = imageSrc;
+    openImagePopup(imageSrc, startIndex) {
+        // Store the starting index for popup navigation
+        this.popupCurrentIndex = startIndex;
+        
+        // Update popup image and counter
+        this.updatePopupImage();
+        
+        // Show the popup
         this.popupOverlay.style.display = 'flex';
+    }
+
+    updatePopupImage() {
+        if (!this.currentBookImages || this.currentBookImages.length === 0) return;
+        
+        // Update popup image
+        this.popupImage.src = this.currentBookImages[this.popupCurrentIndex];
+        
+        // Update popup counter - changed to X/Y format
+        this.popupImageCounter.textContent = `${this.popupCurrentIndex + 1}/${this.currentBookImages.length}`;
+        
+        // Update navigation arrows state
+        this.popupPrevArrow.disabled = this.currentBookImages.length <= 1 || this.popupCurrentIndex === 0;
+        this.popupNextArrow.disabled = this.currentBookImages.length <= 1 || this.popupCurrentIndex === this.currentBookImages.length - 1;
+    }
+
+    navigatePopup(direction) {
+        if (!this.currentBookImages || this.currentBookImages.length <= 1) return;
+        
+        const newIndex = this.popupCurrentIndex + direction;
+        
+        // Check bounds
+        if (newIndex >= 0 && newIndex < this.currentBookImages.length) {
+            this.popupCurrentIndex = newIndex;
+            this.updatePopupImage();
+        }
     }
 
     closeImagePopup() {

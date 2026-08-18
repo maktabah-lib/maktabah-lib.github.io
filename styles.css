@@ -218,23 +218,23 @@ body {
     animation: fadeIn 0.3s ease;
 }
 
-.popup-image {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+.popup-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    z-index: 1001;
 }
 
 .close-popup {
-    position: absolute;
-    top: 20px;
-    right: 30px;
     color: #f1f1f1;
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
-    z-index: 1001;
     transition: color 0.2s ease;
 }
 
@@ -243,6 +243,68 @@ body {
     color: #bbb;
     text-decoration: none;
     cursor: pointer;
+}
+
+.popup-image-counter {
+    color: #f1f1f1;
+    font-size: 1.2rem;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+}
+
+.popup-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.popup-nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    transition: background-color 0.2s ease;
+    backdrop-filter: blur(5px);
+}
+
+.popup-nav-arrow:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.popup-nav-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+#popupPrevArrow {
+    left: 20px;
+}
+
+#popupNextArrow {
+    right: 20px;
 }
 
 @keyframes fadeIn {
@@ -299,5 +361,28 @@ body {
     .close-popup {
         font-size: 30px;
         right: 15px;
+    }
+    
+    .popup-nav-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+    
+    #popupPrevArrow {
+        left: 10px;
+    }
+    
+    #popupNextArrow {
+        right: 10px;
+    }
+    
+    .popup-header {
+        padding: 15px 20px;
+    }
+    
+    .popup-image-counter {
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
     }
 }

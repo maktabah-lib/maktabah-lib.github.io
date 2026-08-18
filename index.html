@@ -23,8 +23,21 @@
 
     <!-- Image Popup Overlay -->
     <div id="imagePopup" class="popup-overlay" style="display: none;">
-        <span class="close-popup">&times;</span>
-        <img id="popupImage" class="popup-image" src="" alt="Enlarged book image">
+        <div class="popup-header">
+            <div id="popupImageCounter" class="popup-image-counter">1/1</div>
+            <span class="close-popup">&times;</span>
+        </div>
+        
+        <!-- Navigation arrows for popup -->
+        <button id="popupPrevArrow" class="popup-nav-arrow" disabled>&#10094;</button>
+        
+        <!-- Image container for popup -->
+        <div class="popup-image-container">
+            <img id="popupImage" class="popup-image" src="" alt="Enlarged book image">
+        </div>
+        
+        <!-- Navigation arrows for popup -->
+        <button id="popupNextArrow" class="popup-nav-arrow" disabled>&#10095;</button>
     </div>
 
     <footer class="footer">
