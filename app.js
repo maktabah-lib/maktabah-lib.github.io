@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Load initial data
     catalog.loadBooks();
+    
+    // Handle route based on query parameters
+    catalog.handleRoute();
 });
 
 class Catalog {
@@ -15,6 +18,7 @@ class Catalog {
         
         // DOM Elements
         this.bookList = document.getElementById('bookList');
+        this.bookDetail = document.getElementById('bookDetail');
     }
 
     loadBooks() {
@@ -24,24 +28,39 @@ class Catalog {
             .then(csvText => {
                 const results = Papa.parse(csvText, { header: true });
                 this.books = results.data;
-                this.renderBooks();
+                this.handleRoute();
             })
             .catch(error => {
                 console.error('Error loading CSV:', error);
                 // Fallback to placeholder data if file doesn't exist
                 this.books = [
-                    { id: '9780140449136', title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', publisher: 'Scribner', year: 1925 },
-                    { id: '9780060935467', title: 'To Kill a Mockingbird', author: 'Harper Lee', publisher: 'Harper Perennial', year: 1960 },
-                    { id: '9780451526849', title: '1984', author: 'George Orwell', publisher: 'Signet Classic', year: 1949 },
-                    { id: '9780316769488', title: 'The Catcher in the Rye', author: 'J.D. Salinger', publisher: 'Little, Brown', year: 1951 },
-                    { id: '9780743273565', title: 'Pride and Prejudice', author: 'Jane Austen', publisher: 'Penguin Classics', year: 1813 },
+                    { ID: '9780140449136', Title: 'The Great Gatsby', Author: 'F. Scott Fitzgerald', Publisher: 'Scribner', Year: 1925, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
+                    { ID: '9780060935467', Title: 'To Kill a Mockingbird', Author: 'Harper Lee', Publisher: 'Harper Perennial', Year: 1960, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
+                    { ID: '9780451526849', Title: '1984', Author: 'George Orwell', Publisher: 'Signet Classic', Year: 1949, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
+                    { ID: '9780316769488', Title: 'The Catcher in the Rye', Author: 'J. D. Salinger', Publisher: 'Little, Brown', Year: 1951, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
+                    { ID: '9780743273565', Title: 'Pride and Prejudice', Author: 'Jane Austen', Publisher: 'Penguin Classics', Year: 1813, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
                 ];
-                this.renderBooks();
+                this.handleRoute();
             });
     }
 
-    // parseCSV method removed as we now use Papa Parse to load CSV as JSON
-    // parseCSV(csvText) { ... }
+    handleRoute() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookId = urlParams.get('id');
+        
+        if (bookId) {
+            const book = this.books.find(b => b.ID === bookId);
+            if (book) {
+                this.renderBookDetail(book);
+            } else {
+                this.bookDetail.innerHTML = '<p>Book not found.</p>';
+                this.bookDetail.style.display = 'block';
+            }
+        } else {
+            this.renderBooks();
+            this.bookDetail.style.display = 'none';
+        }
+    }
 
     renderBooks() {
         this.bookList.innerHTML = '';
@@ -63,7 +82,44 @@ class Catalog {
                 <p class="author">${author}</p>
                 <p class="isbn">ISBN: ${isbn}</p>
             `;
+            // Add click event to navigate to book detail
+            bookCard.addEventListener('click', () => {
+                window.location.href = `./index.html?id=${book.ID}`;
+            });
             this.bookList.appendChild(bookCard);
+        });
+    }
+
+    renderBookDetail(book) {
+        this.bookList.style.display = 'none';
+        this.bookDetail.style.display = 'block';
+        
+        const fields = [
+            { label: 'ID', value: book.ID },
+            { label: 'Title', value: book.Title },
+            { label: 'Volume #', value: book['Volume #'] },
+            { label: 'Author', value: book.Author },
+            { label: 'Translator', value: book.Translator },
+            { label: 'Publisher', value: book.Publisher },
+            { label: '# of Copies', value: book['# of Copies'] },
+            { label: 'Shelf ID', value: book['Shelf ID'] },
+        ];
+        
+        let detailHTML = '<h2>Book Details</h2><div class="detail-content">';
+        fields.forEach(field => {
+            const displayValue = field.value !== null && field.value !== undefined ? field.value : '(none)';
+            detailHTML += `<p><strong>${field.label}:</strong> ${displayValue}</p>`;
+        });
+        detailHTML += '</div>';
+        
+        // Add a back button to return to list
+        detailHTML += '<button id="backToList">Back to Catalog</button>';
+        
+        this.bookDetail.innerHTML = detailHTML;
+        
+        // Attach event listener to back button
+        document.getElementById('backToList').addEventListener('click', () => {
+            window.location.href = './index.html';
         });
     }
 
