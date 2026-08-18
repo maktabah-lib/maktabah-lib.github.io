@@ -1,5 +1,5 @@
 // TIC Library Catalog - Application Logic
-// This file will be populated with functionality for search, filtering, sorting, and pagination
+// This file will be populated with functionality for search, filtering, and sorting
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize application
@@ -12,21 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
 class Catalog {
     constructor() {
         this.books = [];
-        this.filteredBooks = [];
-        this.currentPage = 1;
-        this.itemsPerPage = 8;
-        this.searchTerm = '';
-        this.sortOption = 'title-asc';
         
         // DOM Elements
         this.bookList = document.getElementById('bookList');
-        this.pagination = document.getElementById('pagination');
-        this.searchInput = document.getElementById('searchInput');
-        this.sortSelect = document.getElementById('sortSelect');
     }
 
     loadBooks() {
-        // TODO: Load books from TIC-Library-catalog.csv
+        // Load books from TIC-Library-catalog.csv
         // For now, we'll use placeholder data
         this.books = [
             { id: '9780140449136', title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', publisher: 'Scribner', year: 1925 },
@@ -42,12 +34,12 @@ class Catalog {
     renderBooks() {
         this.bookList.innerHTML = '';
         
-        if (this.filteredBooks.length === 0) {
-            this.bookList.innerHTML = '<p class="no-results">No books found matching your criteria.</p>';
+        if (this.books.length === 0) {
+            this.bookList.innerHTML = '<p class="no-results">No books found.</p>';
             return;
         }
 
-        this.filteredBooks.forEach(book => {
+        this.books.forEach(book => {
             const bookCard = document.createElement('div');
             bookCard.className = 'book-card';
             bookCard.innerHTML = `
@@ -55,142 +47,16 @@ class Catalog {
                 <p class="author">${book.author}</p>
                 <p class="publisher">${book.publisher} (${book.year})</p>
                 <p class="isbn">ISBN: ${book.id}</p>
-                <div class="book-images">
-                    <a href="catalog-imgs/${book.id}/index.html" target="_blank">
-                        <img src="catalog-imgs/${book.id}/cover.jpg" alt="${book.title} cover" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
-                    </a>
-                </div>
             `;
             this.bookList.appendChild(bookCard);
         });
-
-        this.renderPagination();
-    }
-
-    renderPagination() {
-        const totalPages = Math.ceil(this.filteredBooks.length / this.itemsPerPage);
-        
-        if (totalPages <= 1) return;
-
-        let paginationHTML = '';
-        
-        // Previous button
-        paginationHTML += `<button ${this.currentPage === 1 ? 'disabled' : ''} onclick="catalog.changePage(-1)">Previous</button>`;
-        
-        // Page numbers
-        for (let i = 1; i <= totalPages; i++) {
-            paginationHTML += `<button ${i === this.currentPage ? 'class="active"' : ''} onclick="catalog.changePage(${i})">${i}</button>`;
-        }
-        
-        // Next button
-        paginationHTML += `<button ${this.currentPage === totalPages ? 'disabled' : ''} onclick="catalog.changePage(1)">Next</button>`;
-
-        this.pagination.innerHTML = paginationHTML;
-    }
-
-    changePage(direction) {
-        const totalPages = Math.ceil(this.filteredBooks.length / this.itemsPerPage);
-        
-        if (direction === -1 && this.currentPage > 1) {
-            this.currentPage--;
-        } else if (direction === 1 && this.currentPage < totalPages) {
-            this.currentPage++;
-        }
-
-        this.renderBooks();
-    }
-
-    filterAndSort() {
-        let filtered = [...this.books];
-
-        // Apply search filter
-        if (this.searchTerm.trim()) {
-            const term = this.searchTerm.toLowerCase();
-            filtered = filtered.filter(book => 
-                book.title.toLowerCase().includes(term) ||
-                book.author.toLowerCase().includes(term) ||
-                book.publisher.toLowerCase().includes(term)
-            );
-        }
-
-        // Apply sort
-        switch (this.sortOption) {
-            case 'title-asc':
-                filtered.sort((a, b) => a.title.localeCompare(b.title));
-                break;
-            case 'title-desc':
-                filtered.sort((a, b) => b.title.localeCompare(a.title));
-                break;
-            case 'author-asc':
-                filtered.sort((a, b) => a.author.localeCompare(b.author));
-                break;
-            case 'author-desc':
-                filtered.sort((a, b) => b.author.localeCompare(a.author));
-                break;
-        }
-
-        this.filteredBooks = filtered;
-        this.currentPage = 1;
-        this.renderBooks();
     }
 
     updateSearch() {
-        this.searchTerm = this.searchInput.value.trim();
-        this.filterAndSort();
+        // Search functionality removed as requested
     }
 
     updateSort() {
-        this.sortOption = this.sortSelect.value;
-        this.filterAndSort();
+        // Sort functionality removed as requested
     }
 }
-
-// Initialize search suggestions
-const catalog = new Catalog();
-
-catalog.searchInput.addEventListener('input', function(e) {
-    const term = e.target.value.trim();
-    
-    // Show/hide suggestions based on input
-    const suggestionsContainer = document.getElementById('searchSuggestions');
-    
-    if (term.length > 0) {
-        // Get matching books for suggestions
-        const matches = catalog.books.filter(book => 
-            book.title.toLowerCase().includes(term.toLowerCase()) ||
-            book.author.toLowerCase().includes(term.toLowerCase())
-        );
-
-        suggestionsContainer.innerHTML = '';
-        
-        if (matches.length > 0) {
-            matches.forEach(match => {
-                const suggestion = document.createElement('li');
-                suggestion.textContent = `${match.title} by ${match.author}`;
-                suggestion.addEventListener('click', function() {
-                    catalog.searchInput.value = match.title;
-                    catalog.filterAndSort();
-                    suggestionsContainer.style.display = 'none';
-                });
-                suggestionsContainer.appendChild(suggestion);
-            });
-        } else {
-            const noMatch = document.createElement('li');
-            noMatch.textContent = 'No matches found';
-            suggestionsContainer.appendChild(noMatch);
-        }
-        
-        suggestionsContainer.style.display = 'block';
-    } else {
-        suggestionsContainer.style.display = 'none';
-    }
-});
-
-catalog.searchInput.addEventListener('click', function() {
-    document.getElementById('searchSuggestions').style.display = 'none';
-});
-
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
-    catalog.loadBooks();
-});
