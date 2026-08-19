@@ -38,6 +38,9 @@ class Catalog {
         this.popupImageCounter = document.getElementById('popupImageCounter');
         this.closePopup = document.querySelector('.close-popup');
         
+        // Header navigation link
+        this.headerLink = document.querySelector('.header h1 a');
+        
         // Initialize popup events
         this.initializePopupEvents();
     }
@@ -74,6 +77,7 @@ class Catalog {
     loadBooks() {
         // Read books from TIC-Library-catalog.csv using Papa Parse to load as JSON
         fetch('./TIC-Library-catalog.csv')
+        // fetch('./mock-library-catalog.csv')
             .then(response => response.text())
             .then(csvText => {
                 const results = Papa.parse(csvText, { header: true });
@@ -93,8 +97,8 @@ class Catalog {
                     { ID: '9780132121553', Title: 'Computer Networks', Author: 'Andrew S. Tanenbaum, David J. Wetherall', Publisher: 'Pearson', Year: 2010, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
                     { ID: '9780123747501', Title: 'Operating System Concepts', Author: 'Abraham Silberschatz, Peter B. Galvin, Greg Gagne', Publisher: 'Wiley', Year: 2012, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
                     { ID: '9780133594140', Title: 'Database System Concepts', Author: 'Abraham Silberschatz, Henry F. Korth, S. Sudarshan', Publisher: 'McGraw-Hill', Year: 2019, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9781492051367', Title: 'Fluent Python', Author: 'Luciano Ramalho', Publisher: 'O’Reilly Media', Year: 2022, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9781491950296', Title: 'Python Data Science Handbook', Author: 'Jake VanderPlas', Publisher: 'O’Reilly Media', Year: 2016, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
+                    { ID: '9781492051367', Title: 'Fluent Python', Author: 'Luciano Ramalho', Publisher: 'O\'Reilly Media', Year: 2022, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
+                    { ID: '9781491950296', Title: 'Python Data Science Handbook', Author: 'Jake VanderPlas', Publisher: 'O\'Reilly Media', Year: 2016, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
                     { ID: '9780134685991', Title: 'Effective Java', Author: 'Joshua Bloch', Publisher: 'Addison-Wesley', Year: 2018, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
                     { ID: '9780262533058', Title: 'Structure and Interpretation of Computer Programs', Author: 'Harold Abelson, Gerald Jay Sussman', Publisher: 'MIT Press', Year: 1996, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
                     { ID: '9780131101630', Title: 'Computer Architecture: A Quantitative Approach', Author: 'John L. Hennessy, David A. Patterson', Publisher: 'Morgan Kaufmann', Year: 2017, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },

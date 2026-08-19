@@ -23,6 +23,19 @@ body {
     font-size: 2.5rem;
 }
 
+.footer {
+    text-align: center;
+    padding-top: 0.2rem;
+    /* padding-top: 2rem; */
+    padding-bottom: 0.2rem;
+    background-color: #2c3e50;
+    color: white;
+    margin-top: 2rem;
+}
+.footer p {
+  margin: 0;
+}
+
 /* Search bar styles */
 .search-container {
     margin-top: 1rem;
@@ -378,14 +391,6 @@ body {
 .pagination button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-}
-
-.footer {
-    text-align: center;
-    padding: 2rem;
-    background-color: #2c3e50;
-    color: white;
-    margin-top: 2rem;
 }
 
 @media (max-width: 768px) {
