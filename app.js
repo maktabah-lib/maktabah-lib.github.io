@@ -114,7 +114,7 @@ class Catalog {
 
     loadBooks() {
         // Read books from TIC-Library-catalog.csv using Papa Parse to load as JSON
-        fetch('./TIC-Library-catalog.csv')
+        fetch('./prod-library-catalog.csv')
         // fetch('./mock-library-catalog.csv')
             .then(response => response.text())
             .then(csvText => {
@@ -126,9 +126,9 @@ class Catalog {
                 console.error('Error loading CSV:', error);
                 // Fallback to placeholder data if file doesn't exist
                 this.books = [
-                    { ID: '9780262033848', Title: 'Introduction to Algorithms', Author: 'Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein', Publisher: 'MIT Press', Year: 2009, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780131103627', Title: 'The C Programming Language', Author: 'Brian W. Kernighan, Dennis M. Ritchie', Publisher: 'Prentice Hall', Year: 1988, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780262046305', Title: 'Artificial Intelligence: A Modern Approach', Author: 'Stuart Russell, Peter Norvig', Publisher: 'Pearson', Year: 2021, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
+                    { ID: '9780262033848', Title: 'Introduction to Algorithms', Author: 'Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein', Publisher: 'MIT Press', Year: 2009, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf_ID': null },
+                    { ID: '9780131103627', Title: 'The C Programming Language', Author: 'Brian W. Kernighan, Dennis M. Ritchie', Publisher: 'Prentice Hall', Year: 1988, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf_ID': null },
+                    { ID: '9780262046305', Title: 'Artificial Intelligence: A Modern Approach', Author: 'Stuart Russell, Peter Norvig', Publisher: 'Pearson', Year: 2021, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf_ID': null },
                 ];
                 this.handleRoute();
             });
@@ -169,10 +169,12 @@ class Catalog {
             const title = (book.Title || '').toLowerCase();
             const author = (book.Author || '').toLowerCase();
             const isbn = (book.ID || '').toLowerCase();
+            const shelf = (book.Shelf_ID || '').toLowerCase()
             
             return title.includes(searchTerm) || 
                    author.includes(searchTerm) || 
-                   isbn.includes(searchTerm);
+                   isbn.includes(searchTerm) ||
+                   shelf.includes(searchTerm);
         });
 
         // Calculate pagination
@@ -384,7 +386,7 @@ class Catalog {
             { label: 'Translator', value: book.Translator },
             { label: 'Publisher', value: book.Publisher },
             { label: '# of Copies', value: book['# of Copies'] },
-            { label: 'Shelf ID', value: book['Shelf ID'] },
+            { label: 'Shelf_ID', value: book['Shelf_ID'] },
         ];
         
         let detailHTML = `
