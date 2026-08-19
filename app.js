@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize application
     const catalog = new Catalog();
     
+    // Initialize dark mode
+    catalog.initDarkMode();
+    
     // Load initial data
     catalog.loadBooks();
     
@@ -30,6 +33,7 @@ class Catalog {
         this.searchInput = document.getElementById('searchInput');
         this.searchContainer = document.getElementById('searchContainer');
         this.paginationContainer = document.getElementById('pagination');
+        this.darkModeToggle = document.getElementById('darkModeToggle');
         
         // Popup elements
         this.popupOverlay = document.getElementById('imagePopup');
@@ -47,6 +51,36 @@ class Catalog {
         
         // Handle window resize for responsive pagination
         window.addEventListener('resize', () => this.handleResize());
+    }
+
+    initDarkMode() {
+        // Check for saved theme preference or default to light
+        const isDarkMode = localStorage.getItem('darkMode') === 'enabled';
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            this.darkModeToggle.querySelector('.toggle-icon').textContent = '☀️';
+        }
+        
+        // Add event listener to toggle button
+        this.darkModeToggle.addEventListener('click', () => this.toggleDarkMode());
+    }
+
+    toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        
+        // Save preference to localStorage
+        localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+        
+        // Update icon
+        const icon = this.darkModeToggle.querySelector('.toggle-icon');
+        icon.textContent = isDarkMode ? '☀️' : '🌙';
+        
+        // Add rotation animation
+        icon.style.transform = 'rotate(180deg)';
+        setTimeout(() => {
+            icon.style.transform = '';
+        }, 300);
     }
 
     initializePopupEvents() {
@@ -80,8 +114,8 @@ class Catalog {
 
     loadBooks() {
         // Read books from TIC-Library-catalog.csv using Papa Parse to load as JSON
-        // fetch('./TIC-Library-catalog.csv')
-        fetch('./mock-library-catalog.csv')
+        fetch('./TIC-Library-catalog.csv')
+        // fetch('./mock-library-catalog.csv')
             .then(response => response.text())
             .then(csvText => {
                 const results = Papa.parse(csvText, { header: true });
@@ -272,7 +306,7 @@ class Catalog {
                 const ellipsis = document.createElement('span');
                 ellipsis.textContent = '...';
                 ellipsis.style.padding = '0.75rem';
-                ellipsis.style.color = '#666';
+                ellipsis.style.color = 'var(--text-color)';
                 this.paginationContainer.appendChild(ellipsis);
             }
         }
@@ -282,9 +316,9 @@ class Catalog {
             const pageButton = document.createElement('button');
             pageButton.textContent = i;
             if (i === this.currentPage) {
-                pageButton.style.backgroundColor = '#3498db';
+                pageButton.style.backgroundColor = 'var(--link-color)';
                 pageButton.style.color = 'white';
-                pageButton.style.borderColor = '#3498db';
+                pageButton.style.borderColor = 'var(--link-color)';
             }
             pageButton.addEventListener('click', () => {
                 this.currentPage = i;
@@ -299,7 +333,7 @@ class Catalog {
                 const ellipsis = document.createElement('span');
                 ellipsis.textContent = '...';
                 ellipsis.style.padding = '0.75rem';
-                ellipsis.style.color = '#666';
+                ellipsis.style.color = 'var(--text-color)';
                 this.paginationContainer.appendChild(ellipsis);
             }
             
