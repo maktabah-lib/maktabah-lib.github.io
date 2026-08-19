@@ -59,8 +59,9 @@ body {
 }
 
 .header-top {
+    position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-bottom: 1rem;
 }
@@ -68,9 +69,14 @@ body {
 .header h1 {
     margin-bottom: 1rem;
     font-size: 2.5rem;
+    text-align: center;
 }
 
 .dark-mode-toggle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
     background: var(--toggle-bg);
     border: none;
     border-radius: 50%;
@@ -480,6 +486,7 @@ body {
     
     .header h1 {
         font-size: 2rem;
+        line-height: 1.7;
     }
     
     .close-popup {
@@ -524,9 +531,14 @@ body {
     .header-top {
         flex-direction: column;
         gap: 1rem;
+        padding-left: 60px;
+        padding-right: 60px; /* reserves space so wrapped text doesn't run under the button */
     }
     
     .dark-mode-toggle {
         align-self: flex-end;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
     }
 }
