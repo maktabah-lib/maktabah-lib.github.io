@@ -174,7 +174,7 @@ body {
     flex: 0 0 auto;
     width: 100px;
     height: 150px;
-    border-radius: 6px;
+    border-radius: 4px;
     overflow: hidden;
     background-color: var(--input-bg);
     display: flex;
@@ -186,6 +186,16 @@ body {
     max-width: 100%;
     max-height: 100%;
     object-fit: cover;
+    border: 2px solid #605b52;
+    border-radius: 4px;
+}
+
+.dark-mode .book-card-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border: 2px solid #2b2926;
+    border-radius: 4px;
 }
 
 .book-card-image-placeholder {
