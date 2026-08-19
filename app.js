@@ -22,6 +22,7 @@ class Catalog {
         this.books = [];
         this.currentPage = 1;
         this.booksPerPage = 15;
+        this.totalPages = 0;
         
         // DOM Elements
         this.bookList = document.getElementById('bookList');
@@ -43,6 +44,9 @@ class Catalog {
         
         // Initialize popup events
         this.initializePopupEvents();
+        
+        // Handle window resize for responsive pagination
+        window.addEventListener('resize', () => this.handleResize());
     }
 
     initializePopupEvents() {
@@ -76,8 +80,8 @@ class Catalog {
 
     loadBooks() {
         // Read books from TIC-Library-catalog.csv using Papa Parse to load as JSON
-        fetch('./TIC-Library-catalog.csv')
-        // fetch('./mock-library-catalog.csv')
+        // fetch('./TIC-Library-catalog.csv')
+        fetch('./mock-library-catalog.csv')
             .then(response => response.text())
             .then(csvText => {
                 const results = Papa.parse(csvText, { header: true });
@@ -91,43 +95,6 @@ class Catalog {
                     { ID: '9780262033848', Title: 'Introduction to Algorithms', Author: 'Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein', Publisher: 'MIT Press', Year: 2009, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
                     { ID: '9780131103627', Title: 'The C Programming Language', Author: 'Brian W. Kernighan, Dennis M. Ritchie', Publisher: 'Prentice Hall', Year: 1988, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
                     { ID: '9780262046305', Title: 'Artificial Intelligence: A Modern Approach', Author: 'Stuart Russell, Peter Norvig', Publisher: 'Pearson', Year: 2021, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780132350884', Title: 'Clean Code', Author: 'Robert C. Martin', Publisher: 'Prentice Hall', Year: 2008, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780201633610', Title: 'Design Patterns', Author: 'Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides', Publisher: 'Addison-Wesley', Year: 1994, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780321573513', Title: 'Algorithms', Author: 'Robert Sedgewick, Kevin Wayne', Publisher: 'Addison-Wesley', Year: 2011, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780132121553', Title: 'Computer Networks', Author: 'Andrew S. Tanenbaum, David J. Wetherall', Publisher: 'Pearson', Year: 2010, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780123747501', Title: 'Operating System Concepts', Author: 'Abraham Silberschatz, Peter B. Galvin, Greg Gagne', Publisher: 'Wiley', Year: 2012, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780133594140', Title: 'Database System Concepts', Author: 'Abraham Silberschatz, Henry F. Korth, S. Sudarshan', Publisher: 'McGraw-Hill', Year: 2019, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9781492051367', Title: 'Fluent Python', Author: 'Luciano Ramalho', Publisher: 'O\'Reilly Media', Year: 2022, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9781491950296', Title: 'Python Data Science Handbook', Author: 'Jake VanderPlas', Publisher: 'O\'Reilly Media', Year: 2016, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780134685991', Title: 'Effective Java', Author: 'Joshua Bloch', Publisher: 'Addison-Wesley', Year: 2018, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780262533058', Title: 'Structure and Interpretation of Computer Programs', Author: 'Harold Abelson, Gerald Jay Sussman', Publisher: 'MIT Press', Year: 1996, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780131101630', Title: 'Computer Architecture: A Quantitative Approach', Author: 'John L. Hennessy, David A. Patterson', Publisher: 'Morgan Kaufmann', Year: 2017, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780321125217', Title: 'The Pragmatic Programmer', Author: 'David Thomas, Andrew Hunt', Publisher: 'Addison-Wesley', Year: 1999, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780135957059', Title: 'Physics for Scientists and Engineers', Author: 'Raymond A. Serway, John W. Jewett', Publisher: 'Cengage Learning', Year: 2018, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9781118230718', Title: 'University Physics with Modern Physics', Author: 'Hugh D. Young, Roger A. Freedman', Publisher: 'Pearson', Year: 2015, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9781108422413', Title: 'Classical Mechanics', Author: 'John R. Taylor', Publisher: 'Cambridge University Press', Year: 2005, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780201380279', Title: 'Introduction to Electrodynamics', Author: 'David J. Griffiths', Publisher: 'Pearson', Year: 2017, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9781108479035', Title: 'Introduction to Quantum Mechanics', Author: 'David J. Griffiths, Darrell F. Schroeter', Publisher: 'Cambridge University Press', Year: 2018, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780138053260', Title: 'Fundamentals of Physics', Author: 'David Halliday, Robert Resnick, Jearl Walker', Publisher: 'Wiley', Year: 2013, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780521670562', Title: 'Thermal Physics', Author: 'Charles Kittel, Herbert Kroemer', Publisher: 'W. H. Freeman', Year: 2000, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780471404591', Title: 'Introduction to Solid State Physics', Author: 'Charles Kittel', Publisher: 'Wiley', Year: 2004, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780321501219', Title: 'Modern Physics', Author: 'Kenneth S. Krane', Publisher: 'Wiley', Year: 2012, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780073523323', Title: 'Optics', Author: 'Eugene Hecht', Publisher: 'Pearson', Year: 2016, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780199577716', Title: 'Statistical Physics', Author: 'Franz Mandl', Publisher: 'Wiley', Year: 2014, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9781119453918', Title: 'Chemistry: The Molecular Science', Author: 'John W. Moore, Conrad L. Stanitski', Publisher: 'Cengage Learning', Year: 2019, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780134293936', Title: 'Chemistry & Chemical Reactivity', Author: 'John C. Kotz, Paul M. Treichel, John Townsend', Publisher: 'Cengage Learning', Year: 2015, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780321809247', Title: 'Organic Chemistry', Author: 'Paula Yurkanis Bruice', Publisher: 'Pearson', Year: 2016, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9781259631757', Title: 'Inorganic Chemistry', Author: 'Gary L. Miessler, Paul J. Fischer, Donald A. Tarr', Publisher: 'Pearson', Year: 2014, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780199730845', Title: 'Physical Chemistry', Author: 'Peter Atkins, Julio de Paula', Publisher: 'Oxford University Press', Year: 2010, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9781118133576', Title: 'Analytical Chemistry', Author: 'Gary D. Christian', Publisher: 'Wiley', Year: 2014, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780321803221', Title: 'Biochemistry', Author: 'Donald Voet, Judith G. Voet, Charlotte W. Pratt', Publisher: 'Wiley', Year: 2016, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780321957184', Title: 'General Chemistry', Author: 'Linus Pauling', Publisher: 'Dover Publications', Year: 2014, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780073402697', Title: 'Principles of Instrumental Analysis', Author: 'Douglas A. Skoog, F. James Holler, Stanley R. Crouch', Publisher: 'Cengage Learning', Year: 2017, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9781111427107', Title: 'Quantitative Chemical Analysis', Author: 'Daniel C. Harris', Publisher: 'W. H. Freeman', Year: 2015, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780198727488', Title: 'Inorganic Chemistry', Author: 'Shriver & Atkins', Publisher: 'Oxford University Press', Year: 2010, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780133382832', Title: 'Organic Chemistry as a Second Language', Author: 'David R. Klein', Publisher: 'Wiley', Year: 2015, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9781118134412', Title: 'Molecular Driving Forces', Author: 'Ken A. Dill, Sarina Bromberg', Publisher: 'Garland Science', Year: 2010, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
-                    { ID: '9780134164031', Title: 'Physical Chemistry for the Biosciences', Author: 'Raymond Chang', Publisher: 'University Science Books', Year: 2005, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf ID': null },
                 ];
                 this.handleRoute();
             });
@@ -175,7 +142,7 @@ class Catalog {
         });
 
         // Calculate pagination
-        const totalPages = Math.ceil(filteredBooks.length / this.booksPerPage);
+        this.totalPages = Math.ceil(filteredBooks.length / this.booksPerPage);
         const startIndex = (this.currentPage - 1) * this.booksPerPage;
         const endIndex = startIndex + this.booksPerPage;
         const booksToDisplay = filteredBooks.slice(startIndex, endIndex);
@@ -230,18 +197,54 @@ class Catalog {
         });
 
         // Render pagination controls
-        this.renderPagination(totalPages);
+        this.renderPagination();
     }
 
-    renderPagination(totalPages) {
+    getMaxPagesToShow() {
+        const width = window.innerWidth;
+        if (width < 576) return 3;  // Extra small devices
+        if (width < 768) return 5;  // Small devices (tablets)
+        if (width < 992) return 7;  // Medium devices (small laptops)
+        if (width < 1200) return 9; // Large devices (desktops)
+        return 10;                  // Extra large devices
+    }
+
+    renderPagination() {
         this.paginationContainer.innerHTML = '';
         
-        if (totalPages <= 1) {
+        if (this.totalPages <= 1) {
             this.paginationContainer.style.display = 'none';
             return;
         }
 
         this.paginationContainer.style.display = 'flex';
+
+        const maxPagesToShow = this.getMaxPagesToShow();
+        let startPage, endPage;
+
+        // Calculate the range of pages to display
+        if (this.totalPages <= maxPagesToShow) {
+            // If total pages are less than max, show all pages
+            startPage = 1;
+            endPage = this.totalPages;
+        } else {
+            // Calculate the starting page based on current page
+            const halfRange = Math.floor(maxPagesToShow / 2);
+            
+            if (this.currentPage <= halfRange) {
+                // Near the beginning
+                startPage = 1;
+                endPage = maxPagesToShow;
+            } else if (this.currentPage + halfRange >= this.totalPages) {
+                // Near the end
+                endPage = this.totalPages;
+                startPage = this.totalPages - maxPagesToShow + 1;
+            } else {
+                // In the middle
+                startPage = this.currentPage - halfRange;
+                endPage = this.currentPage + halfRange;
+            }
+        }
 
         // Previous button
         const prevButton = document.createElement('button');
@@ -255,8 +258,27 @@ class Catalog {
         });
         this.paginationContainer.appendChild(prevButton);
 
+        // If we're not at the beginning, add ellipsis
+        if (startPage > 1) {
+            const firstPageButton = document.createElement('button');
+            firstPageButton.textContent = '1';
+            firstPageButton.addEventListener('click', () => {
+                this.currentPage = 1;
+                this.renderBooks();
+            });
+            this.paginationContainer.appendChild(firstPageButton);
+            
+            if (startPage > 2) {
+                const ellipsis = document.createElement('span');
+                ellipsis.textContent = '...';
+                ellipsis.style.padding = '0.75rem';
+                ellipsis.style.color = '#666';
+                this.paginationContainer.appendChild(ellipsis);
+            }
+        }
+
         // Page numbers
-        for (let i = 1; i <= totalPages; i++) {
+        for (let i = startPage; i <= endPage; i++) {
             const pageButton = document.createElement('button');
             pageButton.textContent = i;
             if (i === this.currentPage) {
@@ -271,17 +293,43 @@ class Catalog {
             this.paginationContainer.appendChild(pageButton);
         }
 
+        // If we're not at the end, add ellipsis
+        if (endPage < this.totalPages) {
+            if (endPage < this.totalPages - 1) {
+                const ellipsis = document.createElement('span');
+                ellipsis.textContent = '...';
+                ellipsis.style.padding = '0.75rem';
+                ellipsis.style.color = '#666';
+                this.paginationContainer.appendChild(ellipsis);
+            }
+            
+            const lastPageButton = document.createElement('button');
+            lastPageButton.textContent = this.totalPages;
+            lastPageButton.addEventListener('click', () => {
+                this.currentPage = this.totalPages;
+                this.renderBooks();
+            });
+            this.paginationContainer.appendChild(lastPageButton);
+        }
+
         // Next button
         const nextButton = document.createElement('button');
         nextButton.textContent = 'Next';
-        nextButton.disabled = this.currentPage === totalPages;
+        nextButton.disabled = this.currentPage === this.totalPages;
         nextButton.addEventListener('click', () => {
-            if (this.currentPage < totalPages) {
+            if (this.currentPage < this.totalPages) {
                 this.currentPage++;
                 this.renderBooks();
             }
         });
         this.paginationContainer.appendChild(nextButton);
+    }
+
+    handleResize() {
+        // Re-render pagination when window is resized to update page number display
+        if (this.paginationContainer.style.display !== 'none') {
+            this.renderPagination();
+        }
     }
 
     renderBookDetail(book) {
