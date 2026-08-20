@@ -126,9 +126,9 @@ class Catalog {
                 console.error('Error loading CSV:', error);
                 // Fallback to placeholder data if file doesn't exist
                 this.books = [
-                    { ID: '9780262033848', Title: 'Introduction to Algorithms', Author: 'Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein', Publisher: 'MIT Press', Year: 2009, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf_ID': null },
-                    { ID: '9780131103627', Title: 'The C Programming Language', Author: 'Brian W. Kernighan, Dennis M. Ritchie', Publisher: 'Prentice Hall', Year: 1988, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf_ID': null },
-                    { ID: '9780262046305', Title: 'Artificial Intelligence: A Modern Approach', Author: 'Stuart Russell, Peter Norvig', Publisher: 'Pearson', Year: 2021, 'Volume #': null, Translator: null, '# of Copies': null, 'Shelf_ID': null },
+                    { ID: '9780262033848', Title: 'Introduction to Algorithms', Author: 'Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein', Publisher: 'MIT Press', Year: 2009, 'Volume': null, Translator: null, '# of Copies': null, 'Shelf_ID': null },
+                    { ID: '9780131103627', Title: 'The C Programming Language', Author: 'Brian W. Kernighan, Dennis M. Ritchie', Publisher: 'Prentice Hall', Year: 1988, 'Volume': null, Translator: null, '# of Copies': null, 'Shelf_ID': null },
+                    { ID: '9780262046305', Title: 'Artificial Intelligence: A Modern Approach', Author: 'Stuart Russell, Peter Norvig', Publisher: 'Pearson', Year: 2021, 'Volume': null, Translator: null, '# of Copies': null, 'Shelf_ID': null },
                 ];
                 this.handleRoute();
             });
@@ -168,7 +168,7 @@ class Catalog {
         const filteredBooks = this.books.filter(book => {
             const title = (book.Title || '').toLowerCase();
             const author = (book.Author || '').toLowerCase();
-            const isbn = (book.ID || '').toLowerCase();
+            const isbn = (book.ISBN || '').toLowerCase();
             const shelf = (book.Shelf_ID || '').toLowerCase()
             
             return title.includes(searchTerm) || 
@@ -187,7 +187,7 @@ class Catalog {
         booksToDisplay.forEach(book => {
             const title = book.Title || '(none)';
             const author = book.Author || '(none)';
-            const isbn = book.ID || '(none)';
+            const isbn = book.ISBN || '(none)';
             
             const bookCard = document.createElement('div');
             bookCard.className = 'book-card';
@@ -216,10 +216,15 @@ class Catalog {
             bookCard.appendChild(imageDiv);
             
             // Create details container
+            var displayTitle = title;
+            if (book.Volume != '' && book.Volume != null) {
+                displayTitle += ": Vol. " + book.Volume
+            }
+
             const detailsDiv = document.createElement('div');
             detailsDiv.className = 'book-card-details';
             detailsDiv.innerHTML = `
-                <h5>${title}</h5>
+                <h5>${displayTitle}</h5>
                 <p class="author">${author}</p>
                 <p class="isbn">ISBN: ${isbn}</p>
             `;
@@ -377,16 +382,17 @@ class Catalog {
         this.searchContainer.style.display = 'none';
         
         const title = book.Title || '(none)';
+        const num_copies = book['# of Copies'] || 1;
         
         const fields = [
-            { label: 'ID', value: book.ID },
-            { label: 'Title', value: book.Title },
-            { label: 'Volume #', value: book['Volume #'] },
             { label: 'Author', value: book.Author },
+            { label: 'Volume', value: book['Volume'] },
+            { label: 'Language', value: book.Language },
             { label: 'Translator', value: book.Translator },
             { label: 'Publisher', value: book.Publisher },
-            { label: '# of Copies', value: book['# of Copies'] },
-            { label: 'Shelf_ID', value: book['Shelf_ID'] },
+            { label: 'ISBN', value: book.ISBN },
+            { label: 'Number of Copies', value: num_copies },
+            { label: 'Shelf ID', value: book['Shelf_ID'] },
         ];
         
         let detailHTML = `
@@ -408,8 +414,11 @@ class Catalog {
                     <div class="col-md-8">
                         <div class="book-details">
                             <h2>${title}</h2>
-                            <div class="detail-content">
         `;
+        if (book.Volume != null && book.Volume != '') {
+            detailHTML += `<h4><i>Volume ${book.Volume}</i></h4>`;
+        }
+        detailHTML += `<div class="detail-content">`;
         
         fields.forEach(field => {
             const displayValue = field.value !== null && field.value !== undefined ? field.value : '(none)';

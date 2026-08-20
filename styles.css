@@ -8,6 +8,7 @@
     /* Light mode variables - Cedar Green Theme */
     --bg-color: #f4f7f9;
     --text-color: #333;
+    --text-color-secondary: #2c5530;
     --header-bg: linear-gradient(135deg, #2c5530, #4a7c59);
     --header-text: white;
     --card-bg: white;
@@ -27,6 +28,7 @@
     /* Dark mode variables - Cedar Green Theme */
     --bg-color: #1a1a1a;
     --text-color: #e0e0e0;
+    --text-color-secondary: #c2e2c5;
     --header-bg: linear-gradient(135deg, #1a1a1a, #2c5530);
     --header-text: #e0e0e0;
     --card-bg: #2d2d2d;
@@ -327,6 +329,11 @@ body {
     color: var(--text-color);
     margin-bottom: 1rem;
     font-size: 2rem;
+}
+
+.book-detail .book-details h4 {
+    color: var(--text-color-secondary);
+    margin-bottom: 1rem;
 }
 
 .book-detail .detail-content p {
