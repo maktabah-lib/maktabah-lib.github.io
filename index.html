@@ -42,12 +42,44 @@
             <span class="close-intro-popup">&times;</span>
         </div>
         <div class="popup-content">
-            <ul>
-                <li>Browse through our catalog</li>
-                <li>Borrow a book</li>
-                <li>Return the book to the book shelf</li>
-            </ul>
-            <button class="btn btn-primary" id="gotItButton">Got it!</button>
+            <div class="carousel-container">
+                <div class="carousel-slides">
+                    <!-- Slide 1 -->
+                    <div class="carousel-slide active">
+                        <div class="slide-content">
+                            <h3>Browse Through Our Catalog</h3>
+                            <p>Explore our collection, or search for books by title, author, publisher, ISBN, or bookshelf.</p>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <h3>Borrow a Book </h3>
+                            <h4><i>(In-Library Reading Only)</i></h4>
+                            <p>Come to the front desk to ask for a book. A volunteer will assist you.</p>
+                            <p><b>Important:</b> Please keep the book in the masjid</p>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="carousel-slide">
+                        <div class="slide-content">
+                            <h3>Return to Front Desk</h3>
+                            <p>When you're done, return the book to the front desk. We'll put it away for you.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-dots">
+                    <span class="dot active" data-slide="0"></span>
+                    <span class="dot" data-slide="1"></span>
+                    <span class="dot" data-slide="2"></span>
+                </div>
+                
+                <div class="carousel-navigation">
+                    <button id="carouselPrev" class="btn btn-secondary carousel-nav" style="display: none;">Previous</button>
+                    <button id="carouselNext" class="btn btn-primary carousel-nav">Next</button>
+                </div>
+            </div>
         </div>
     </div>
 

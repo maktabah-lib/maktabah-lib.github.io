@@ -664,6 +664,10 @@ body {
     max-width: 500px;
     text-align: center;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
 }
 
 #introPopup .popup-title {
@@ -684,15 +688,94 @@ body {
     color: rgba(255, 255, 255, 0.7);
 }
 
-#introPopup ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0 0 20px 0;
+/* Carousel Styles */
+.carousel-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
 }
 
-#introPopup li {
-    margin-bottom: 10px;
-    font-size: 1.1rem;
+.carousel-slides {
+    position: relative;
+    overflow: hidden;
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-end;
+}
+
+.carousel-slide {
+    display: none;
+    width: 100%;
+    animation: slideIn 0.5s ease;
+}
+
+.carousel-slide.active {
+    display: block;
+}
+
+.slide-content {
+    text-align: left;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.slide-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--header-text);
+}
+
+.slide-content p {
+    font-size: 1.2rem;
+    color: var(--header-text);
+    line-height: 1.5;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background-color: white;
+}
+
+.dot:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.carousel-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: auto;
+}
+
+.carousel-nav {
+    min-width: 120px;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 @keyframes fadeIn {
@@ -795,5 +878,13 @@ body {
     #introPopup {
         width: 90%;
         height: 90%;
+    }
+    
+    .slide-content h3 {
+        font-size: 1.5rem;
+    }
+    
+    .slide-content p {
+        font-size: 1rem;
     }
 }

@@ -55,6 +55,14 @@ class Catalog {
         this.gotItButton = document.getElementById('gotItButton');
         this.borrowButton = document.getElementById('borrowButton');
         
+        // Carousel elements
+        this.slides = document.querySelectorAll('.carousel-slide');
+        this.dots = document.querySelectorAll('.dot');
+        this.prevButton = document.getElementById('carouselPrev');
+        this.nextButton = document.getElementById('carouselNext');
+        this.currentSlide = 0;
+        this.totalSlides = this.slides.length;
+        
         // Initialize popup events
         this.initializePopupEvents();
         
@@ -124,12 +132,22 @@ class Catalog {
         if (this.closeIntroPopup) {
             this.closeIntroPopup.addEventListener('click', () => this.closeIntroPopupHandler());
         }
-        if (this.gotItButton) {
-            this.gotItButton.addEventListener('click', () => this.closeIntroPopupHandler());
-        }
         if (this.borrowButton) {
             this.borrowButton.addEventListener('click', () => this.showPopup());
         }
+        
+        // Carousel events
+        if (this.nextButton) {
+            this.nextButton.addEventListener('click', () => this.nextSlide());
+        }
+        if (this.prevButton) {
+            this.prevButton.addEventListener('click', () => this.prevSlide());
+        }
+        
+        // Dot events
+        this.dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => this.goToSlide(index));
+        });
     }
 
     showIntroPopup() {
@@ -143,11 +161,68 @@ class Catalog {
 
     showPopup() {
         this.introPopup.style.display = 'flex';
+        this.currentSlide = 0;
+        this.updateCarousel();
     }
 
     closeIntroPopupHandler() {
         this.introPopup.style.display = 'none';
         localStorage.setItem('introPopupSeen', 'true');
+    }
+
+    nextSlide() {
+        if (this.currentSlide < this.totalSlides - 1) {
+            this.currentSlide++;
+            this.updateCarousel();
+        } else {
+            // Last slide - close popup
+            this.closeIntroPopupHandler();
+        }
+    }
+
+    prevSlide() {
+        if (this.currentSlide > 0) {
+            this.currentSlide--;
+            this.updateCarousel();
+        }
+    }
+
+    goToSlide(index) {
+        this.currentSlide = index;
+        this.updateCarousel();
+    }
+
+    updateCarousel() {
+        // Update slides
+        this.slides.forEach((slide, index) => {
+            if (index === this.currentSlide) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        
+        // Update dots
+        this.dots.forEach((dot, index) => {
+            if (index === this.currentSlide) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+        
+        // Update navigation buttons
+        if (this.prevButton) {
+            this.prevButton.style.display = this.currentSlide === 0 ? 'none' : 'block';
+        }
+        
+        if (this.nextButton) {
+            if (this.currentSlide === this.totalSlides - 1) {
+                this.nextButton.textContent = 'Got it!';
+            } else {
+                this.nextButton.textContent = 'Next';
+            }
+        }
     }
 
     loadBooks() {
