@@ -1,10 +1,23 @@
-ID,Title,Volume #,Author,Translator,Publisher,# of Copies,Shelf_ID
-9960-9678-9-1,The Noble Life of the Prophet (peace be upon him),3,Dr. 'Ali Muhammad As-Sallaabee,Faisal Shafeeq,Darussalam,,C2
-9960-897-58-3,Child Companions around the Prophet (peace be upon him),,"Research Division, Darussalam",Sameh Strauch,Darussalam,,C2
-9960-9956-4-X,A Mercy to the Universe,,Sa'eed bin 'Ali bin Wahf Al-Qahtani,Faisal bin Muhammad Shafeeq,Darussalam,,C2
-9960-8929-3-X,The History of Islam,3,Akbar Shah Najeebabadi,,Darussalam,,C2
-9960-672-80-8,The Day of Resurrection In the Light of the Qur'an and Sunnah,,Umar S. al-Ashqar,Nasiruddin al-Khattab,International Islamic Publishing House,,C2,The Final Day: Part 2
-9960-850-38-2,Belief in Allah in the Light of the Qur'an and Sunnah,,Umar S. al-Ashqar,Nasiruddin al-Khattab,International Islamic Publishing House,,C2
-9960-892-06-9,What Must Be Known About Islam,,Muhammad bin 'Ali Al-Arfaj,Darussalam,Darussalam,,C2
-tccoct_dar,The Concise Collection on Creed and Tauhid,,Darussalam (supervision of Abdul Malik Mujahid),,Darussalam,,C2
-TheTrueReligion_BilalPhilips,The True Religion,,Abu Ameenah Bilal Philips,,,,C2
+ID,ISBN,Title,Volume,Author,Translator,Publisher,# of Copies,Shelf_ID,Category,Language,Notes
+9960-9678-9-1,9960-9678-9-1,The Noble Life of the Prophet (peace be upon him),3,Dr. 'Ali Muhammad As-Sallaabee,Faisal Shafeeq,Darussalam,,C2,,English,
+9960-897-58-3,9960-897-58-3,Child Companions around the Prophet (peace be upon him),,"Research Division, Darussalam",Sameh Strauch,Darussalam,,C2,,English,
+9960-9956-4-X,9960-9956-4-X,A Mercy to the Universe,,Sa'eed bin 'Ali bin Wahf Al-Qahtani,Faisal bin Muhammad Shafeeq,Darussalam,,C2,,English,
+9960-8929-3-X,9960-8929-3-X,The History of Islam,3,Akbar Shah Najeebabadi,,Darussalam,,C2,,English,
+9960-672-80-8,9960-672-80-8,The Day of Resurrection In the Light of the Qur'an and Sunnah,,Umar S. al-Ashqar,Nasiruddin al-Khattab,International Islamic Publishing House,,C2,,English,The Final Day: Part 2
+9960-850-38-2,9960-850-38-2,Belief in Allah in the Light of the Qur'an and Sunnah,,Umar S. al-Ashqar,Nasiruddin al-Khattab,International Islamic Publishing House,,C2,,English,
+9960-892-06-9,9960-892-06-9,What Must Be Known About Islam,,Muhammad bin 'Ali Al-Arfaj,Darussalam,Darussalam,,C2,,English,
+tccoct_dar,,The Concise Collection on Creed and Tauhid,,Darussalam (supervision of Abdul Malik Mujahid),,Darussalam,,C2,,English,
+TheTrueReligion_BilalPhilips,,The True Religion,,Abu Ameenah Bilal Philips,,,,C2,,English,
+alkabar-dhahabi-mms-mbc,,The Major Sins (Al-Kaba'r),,Muhammad bin 'Uthman Adh-Dhahabi,Mohammed Moinuddin Siddiqui,Millat Book Center,2,C2,,English,
+978-1591440802,978-1591440802,The Pillars of Islam & Iman and what every Muslim must know about his religion,,Muhammad bin Jamil Zeno,Research & Compilation Department: Dar-us-Salam Publications,Darusallam,,C2,,English,
+the-choice_vol1_ad_fahilkhair,,The Choice: Islam and Christianity,1,Ahmed Deedat,,Fahil Khair - Saudi Arabia AABF,2,C2,,English,
+978-1591440826,978-1591440826,The Pillars of Islam,,Shaikh Abdullah bin Abduu-Rahman bin Jabrin,Jalal Muhammad Abualrub,Darusallam,,C2,,English,
+978-9960740799-vol1,978-9960740799,Interpretation of the Meanings of the Noble Qur'an in the English Language,1,"Dr. Muhammad Taql-ud-Din Al-Hilali, Dr. Muhammad Muhsin Khan",,Darusallam,,B2,,English,
+978-9960740799-vol2,978-9960740799,Interpretation of the Meanings of the Noble Qur'an in the English Language,2,"Dr. Muhammad Taql-ud-Din Al-Hilali, Dr. Muhammad Muhsin Khan",,Darusallam,,B2,,English,
+978-9960740799-vol3,978-9960740799,Interpretation of the Meanings of the Noble Qur'an in the English Language,3,"Dr. Muhammad Taql-ud-Din Al-Hilali, Dr. Muhammad Muhsin Khan",,Darusallam,,B2,,English,
+978-9960740799-vol4,978-9960740799,Interpretation of the Meanings of the Noble Qur'an in the English Language,4,"Dr. Muhammad Taql-ud-Din Al-Hilali, Dr. Muhammad Muhsin Khan",,Darusallam,,B2,,English,
+978-9960740799-vol5,978-9960740799,Interpretation of the Meanings of the Noble Qur'an in the English Language,5,"Dr. Muhammad Taql-ud-Din Al-Hilali, Dr. Muhammad Muhsin Khan",,Darusallam,,B2,,English,
+978-9960740799-vol6,978-9960740799,Interpretation of the Meanings of the Noble Qur'an in the English Language,6,"Dr. Muhammad Taql-ud-Din Al-Hilali, Dr. Muhammad Muhsin Khan",,Darusallam,,B2,,English,
+978-9960740799-vol7,978-9960740799,Interpretation of the Meanings of the Noble Qur'an in the English Language,7,"Dr. Muhammad Taql-ud-Din Al-Hilali, Dr. Muhammad Muhsin Khan",,Darusallam,,B2,,English,
+978-9960740799-vol8,978-9960740799,Interpretation of the Meanings of the Noble Qur'an in the English Language,8,"Dr. Muhammad Taql-ud-Din Al-Hilali, Dr. Muhammad Muhsin Khan",,Darusallam,,B2,,English,
+978-9960740799-vol9,978-9960740799,Interpretation of the Meanings of the Noble Qur'an in the English Language,9,"Dr. Muhammad Taql-ud-Din Al-Hilali, Dr. Muhammad Muhsin Khan",,Darusallam,,B2,,English,
