@@ -22,6 +22,39 @@
     --link-hover: #3a6b47;
     --toggle-bg: rgba(255, 255, 255, 0.2);
     --toggle-hover: rgba(255, 255, 255, 0.3);
+
+    /* Buttons */
+    --btn-primary-bg: #2c5530;
+    --btn-primary-text: white;
+    --btn-primary-hover: #244528;
+    --btn-primary-active: #1c3a20;
+
+    --btn-secondary-bg: #e8efe9;
+    --btn-secondary-text: #2c5530;
+    --btn-secondary-hover: #d8e5da;
+    --btn-secondary-border: #4a7c59;
+
+    --btn-disabled-bg: #cfcfcf;
+    --btn-disabled-text: #888;
+
+    /* Focus ring (accessibility) */
+    --focus-ring: 0 0 0 3px rgba(74, 124, 89, 0.4);
+
+    /* Overlay / popup (for your welcome modal) */
+    --overlay-backdrop: rgba(0, 0, 0, 0.5);
+    --overlay-bg: white;
+    --overlay-text: #333;
+    --overlay-shadow: 0 8px 24px rgba(0,0,0,0.2);
+
+    /* Status colors (useful for the feedback form) */
+    --success-bg: #e6f4ea;
+    --success-text: #1e7b34;
+    --error-bg: #fdecea;
+    --error-text: #c0392b;
+
+    /* Scrollbar (optional polish) */
+    --scrollbar-thumb: #a9c2ae;
+    --scrollbar-track: #f0f0f0;
 }
 
 .dark-mode {
@@ -42,6 +75,39 @@
     --link-hover: #85d9a8;
     --toggle-bg: rgba(255, 255, 255, 0.1);
     --toggle-hover: rgba(255, 255, 255, 0.2);
+
+    /* Buttons */
+    --btn-primary-bg: #4a7c59;
+    --btn-primary-text: #f0f0f0;
+    --btn-primary-hover: #5a8f6a;
+    --btn-primary-active: #3a6b47;
+
+    --btn-secondary-bg: #333d34;
+    --btn-secondary-text: #c2e2c5;
+    --btn-secondary-hover: #3d4a3f;
+    --btn-secondary-border: #66c28e;
+
+    --btn-disabled-bg: #444;
+    --btn-disabled-text: #777;
+
+    /* Focus ring */
+    --focus-ring: 0 0 0 3px rgba(102, 194, 142, 0.4);
+
+    /* Overlay / popup */
+    --overlay-backdrop: rgba(0, 0, 0, 0.7);
+    --overlay-bg: #2d2d2d;
+    --overlay-text: #e0e0e0;
+    --overlay-shadow: 0 8px 24px rgba(0,0,0,0.5);
+
+    /* Status colors */
+    --success-bg: #1e3a24;
+    --success-text: #8fd6a3;
+    --error-bg: #3a1f1c;
+    --error-text: #e28b7e;
+
+    /* Scrollbar */
+    --scrollbar-thumb: #4a7c59;
+    --scrollbar-track: #2d2d2d;
 }
 
 body {
@@ -147,6 +213,111 @@ body {
 .search-input:focus {
     outline: none;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Base button — shared shape/behavior, borrow-button's pattern generalized */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-family: inherit;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--input-shadow);
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+.btn:disabled {
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Primary — solid fill, for main actions (Submit, Borrow, Confirm) */
+.btn-primary {
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border-color: var(--btn-primary-bg);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--btn-primary-hover);
+    border-color: var(--btn-primary-hover);
+}
+
+.btn-primary:active:not(:disabled) {
+    background-color: var(--btn-primary-active);
+    border-color: var(--btn-primary-active);
+}
+
+.btn-primary:disabled {
+    background-color: var(--btn-disabled-bg);
+    color: var(--btn-disabled-text);
+    border-color: var(--btn-disabled-bg);
+}
+
+/* Secondary — outline that fills on hover, borrow-button's original look */
+.btn-secondary {
+    background-color: var(--btn-secondary-bg);
+    color: var(--btn-secondary-text);
+    border-color: var(--btn-secondary-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: var(--btn-secondary-hover);
+}
+
+.btn-secondary:disabled {
+    background-color: var(--btn-disabled-bg);
+    color: var(--btn-disabled-text);
+    border-color: var(--btn-disabled-bg);
+}
+
+/* Ghost — for less prominent actions (pagination, "back to list") */
+.btn-ghost {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+.btn-ghost:hover:not(:disabled) {
+    background-color: var(--link-color);
+    color: white;
+    border-color: var(--link-color);
+}
+
+.btn-ghost:disabled {
+    opacity: 0.5;
+}
+
+/* Borrow button styles */
+.borrow-container {
+    margin-top: 1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.borrow-button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: var(--input-bg);
+    color: var(--text-color);
+}
+
+.borrow-button:hover {
+    background-color: var(--link-color);
+    color: white;
+    border-color: var(--link-color);
 }
 
 .catalog-main {
@@ -372,7 +543,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -467,6 +638,61 @@ body {
 
 #popupNextArrow {
     right: 20px;
+}
+
+/* Intro popup specific styles */
+#introPopup {
+    width: 80%;
+    height: 80%;
+    background-color: #163619;
+    color: var(--header-text);
+    border-radius: 15px;
+    overflow: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-right: 10%;
+    margin-left: 10%;
+}
+
+#introPopup .popup-content {
+    color: var(--header-text);
+    padding: 20px;
+    max-width: 500px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#introPopup .popup-title {
+    color: var(--header-text);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.close-intro-popup {
+    color: var(--header-text);
+    font-size: 40px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-intro-popup:hover {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#introPopup ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
+
+#introPopup li {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
 }
 
 @keyframes fadeIn {
@@ -564,5 +790,10 @@ body {
         width: 40px;
         height: 40px;
         font-size: 1.2rem;
+    }
+    
+    #introPopup {
+        width: 90%;
+        height: 90%;
     }
 }

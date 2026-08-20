@@ -19,6 +19,10 @@
         <div class="search-container" id="searchContainer">
             <input type="text" id="searchInput" placeholder="Search books by title, author, ISBN, shelf no., etc ..." class="search-input">
         </div>
+        <!-- Borrow a book button -->
+        <div class="borrow-container">
+            <button id="borrowButton" class="btn borrow-button">Borrow a book</button>
+        </div>
         <div class="header-feedback">
             <i>Feedback forms: <a href="https://forms.gle/Tq9fv9zXuXfPUCft5">Request a feature/give feedback</a>  or  <a href="https://forms.gle/fLm2HizbWKBiUSz66">Report an issue</a></i>
         </div>
@@ -30,6 +34,22 @@
         <div class="book-detail" id="bookDetail" style="display:none;"></div>
         <div class="pagination" id="pagination"></div>
     </main>
+
+    <!-- Intro Popup Overlay -->
+    <div id="introPopup" class="popup-overlay" style="display: none;">
+        <div class="popup-header">
+            <div class="popup-title">Welcome to Maktabah Library Catalog</div>
+            <span class="close-intro-popup">&times;</span>
+        </div>
+        <div class="popup-content">
+            <ul>
+                <li>Browse through our catalog</li>
+                <li>Borrow a book</li>
+                <li>Return the book to the book shelf</li>
+            </ul>
+            <button class="btn btn-primary" id="gotItButton">Got it!</button>
+        </div>
+    </div>
 
     <!-- Image Popup Overlay -->
     <div id="imagePopup" class="popup-overlay" style="display: none;">

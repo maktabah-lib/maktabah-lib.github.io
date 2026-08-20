@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load initial data
     catalog.loadBooks();
     
+    // Show intro popup if first visit
+    catalog.showIntroPopup();
+    
     // Handle route based on query parameters
     catalog.handleRoute();
     
@@ -45,6 +48,12 @@ class Catalog {
         
         // Header navigation link
         this.headerLink = document.querySelector('.header h1 a');
+        
+        // Intro popup elements
+        this.introPopup = document.getElementById('introPopup');
+        this.closeIntroPopup = document.querySelector('.close-intro-popup');
+        this.gotItButton = document.getElementById('gotItButton');
+        this.borrowButton = document.getElementById('borrowButton');
         
         // Initialize popup events
         this.initializePopupEvents();
@@ -110,6 +119,35 @@ class Catalog {
                 }
             }
         });
+        
+        // Intro popup events
+        if (this.closeIntroPopup) {
+            this.closeIntroPopup.addEventListener('click', () => this.closeIntroPopupHandler());
+        }
+        if (this.gotItButton) {
+            this.gotItButton.addEventListener('click', () => this.closeIntroPopupHandler());
+        }
+        if (this.borrowButton) {
+            this.borrowButton.addEventListener('click', () => this.showPopup());
+        }
+    }
+
+    showIntroPopup() {
+        const hasSeen = localStorage.getItem('introPopupSeen');
+        if (hasSeen) {
+            this.introPopup.style.display = 'none';
+            return;
+        }
+        this.showPopup();
+    }
+
+    showPopup() {
+        this.introPopup.style.display = 'flex';
+    }
+
+    closeIntroPopupHandler() {
+        this.introPopup.style.display = 'none';
+        localStorage.setItem('introPopupSeen', 'true');
     }
 
     loadBooks() {
@@ -427,7 +465,7 @@ class Catalog {
         
         detailHTML += `
                             </div>
-                            <button id="backToList">Back to Catalog</button>
+                            <button class="btn-primary" id="backToList">Back to Catalog</button>
                         </div>
                     </div>
                 </div>
